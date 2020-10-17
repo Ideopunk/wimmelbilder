@@ -2,43 +2,32 @@ import React, { useState } from "react";
 import AT from "./AT";
 import Timer from "./Timer";
 import Leaderboard from "./Leaderboard";
+import Character from "./Character";
 import "../style/App.scss";
+import Ready from "./Ready";
 
-const Ready = (props) => {
-	const [name, setName] = useState("");
-
-	const handleChange = (e) => {
-		setName(e.target.value);
-	};
-
-	const handleSubmit = () => {
-		console.log(name);
-		// cloud firestore
-	};
-
-	return (
-		<form className="ready" onSubmit={props.getReady}>
-			<label>
-				Name
-				<input required onChange={(e) => handleChange(e)} />
-			</label>
-			<input type="submit" value="Are you ready?" />
-		</form>
-	);
-};
 
 const App = () => {
 	const [ready, setReady] = useState(false);
+	const [level, setLevel] = useState(0)
 
 	const getReady = () => {
 		setReady(true);
 	};
 
+	const successfulFind = () => {
+		setLevel(level => level + 1)
+	}
+
 	if (ready) {
 		return (
 			<div className="App">
-				<AT />
-				<Timer start={ready}/>
+				<AT level={level} />
+				<div className="sideboard">
+					<Character level={level}/>
+					<Timer start={ready}/>
+					<Leaderboard />
+				</div>
 			</div>
 		);
 	} else {
