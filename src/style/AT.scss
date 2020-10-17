@@ -1,5 +1,6 @@
 .image {
-    width: 100vw;
+    flex: 8;
+    max-width: 80vw;
     // height: 100vh;
     object-fit: contain;
 }

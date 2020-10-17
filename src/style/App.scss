@@ -1,6 +1,17 @@
 @import "./reset";
 @import "./AT";
 
+.App {
+	display: flex;
+	width: 100vw;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.sidebar {
+	flex: 1;
+}
+
 p {
-    color: red;
+	color: red;
 }
