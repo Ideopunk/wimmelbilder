@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AT from "./AT";
+import Timer from "./Timer";
 import Leaderboard from "./Leaderboard";
 import "../style/App.scss";
 
@@ -37,6 +38,7 @@ const App = () => {
 		return (
 			<div className="App">
 				<AT />
+				<Timer start={ready}/>
 			</div>
 		);
 	} else {
