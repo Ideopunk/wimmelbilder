@@ -10,7 +10,7 @@ import {db} from "../config/fbConfig";
 
 const App = () => {
 	const [ready, setReady] = useState(false);
-	const [level, setLevel] = useState(0);
+	const [find, setFind] = useState([false, false, false]);
 	const [name, setName] = useState("");
 	const [leaderboard, setLearderboard] = useState(null);
 	const [seconds, setSeconds] = useState(0);
@@ -41,20 +41,25 @@ const App = () => {
 		setSeconds((seconds) => newTime);
 	};
 
-	const successfulFind = () => {
-		setLevel((level) => level + 1);
-	};
+	const successfulFind = (number) => {
+		setFind(find.map((char, index) => {
+			if (index === number) {
+				char = true
+			}; 
+			return char;
+	}))};
 
 	// when a level is completed, check to see if we're done.
 	useEffect(() => {
-		console.log("use effect");
+		console.log("win check");
 
-		if (level > 3) {
+		if (!find.includes(false)) {
+			console.log("u win!")
 			setReady(false);
-			setLevel(0);
+			setFind([false, false, false]);
 			win();
 		}
-	}, [level]);
+	}, [find]);
 
 	// yay, we're done, add to  leaderboarded
 	const win = () => {
@@ -63,9 +68,9 @@ const App = () => {
 
 	return (
 		<div className="App">
-			{ready ? <AT level={level} /> : <Ready getReady={getReady} />}
+			{ready ? <AT find={find} successfulFind={successfulFind}/> : <Ready getReady={getReady} />}
 			<div className="sideboard">
-				<Character level={level} />
+				<Character find={find} />
 				<Timer seconds={seconds} updateTime={updateTime} start={ready} />
 				{leaderboard? <Leaderboard entrants={leaderboard} /> : ""}
 			</div>
