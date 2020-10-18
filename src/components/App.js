@@ -5,7 +5,8 @@ import Leaderboard from "./Leaderboard";
 import Character from "./Character";
 import "../style/App.scss";
 import Ready from "./Ready";
-import db from "../config/fbConfig";
+import {db} from "../config/fbConfig";
+
 
 const App = () => {
 	const [ready, setReady] = useState(false);

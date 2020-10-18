@@ -1,7 +1,8 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/functions"
 
-let firebaseConfig = {
+const firebaseConfig = {
 	apiKey: "AIzaSyDxE3i4JmKzHh2baU7NxF8-oeErRq4b5oU",
 	authDomain: "waldo-2465f.firebaseapp.com",
 	databaseURL: "https://waldo-2465f.firebaseio.com",
@@ -13,4 +14,7 @@ let firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-export default db;
+
+const checkChar = firebase.functions().httpsCallable("checkChar");
+
+export {db, checkChar};
