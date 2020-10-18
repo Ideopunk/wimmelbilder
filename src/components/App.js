@@ -1,12 +1,26 @@
-import React, { useEffect, useState } from "react";
-import AT from "./AT";
+import React, { lazy, Suspense, useEffect, useState } from "react";
+import Loader from "react-loader-spinner";
 import Timer from "./Timer";
 import Leaderboard from "./Leaderboard";
 import Character from "./Character";
 import "../style/App.scss";
 import Ready from "./Ready";
-import {db} from "../config/fbConfig";
+import { db } from "../config/fbConfig";
+const AT = lazy(() => import("./AT"));
 
+const LoaderContainer = () => {
+	return (
+		<div className="center">
+			<Loader
+				type="TailSpin"
+				color="pink"
+				height={100}
+				width={100}
+				timeout={3000} //3 secs
+			/>
+		</div>
+	);
+};
 
 const App = () => {
 	const [ready, setReady] = useState(false);
@@ -42,19 +56,22 @@ const App = () => {
 	};
 
 	const successfulFind = (number) => {
-		setFind(find.map((char, index) => {
-			if (index === number) {
-				char = true
-			}; 
-			return char;
-	}))};
+		setFind(
+			find.map((char, index) => {
+				if (index === number) {
+					char = true;
+				}
+				return char;
+			})
+		);
+	};
 
 	// when a level is completed, check to see if we're done.
 	useEffect(() => {
 		console.log("win check");
 
 		if (!find.includes(false)) {
-			console.log("u win!")
+			console.log("u win!");
 			setReady(false);
 			setFind([false, false, false]);
 			win();
@@ -68,11 +85,19 @@ const App = () => {
 
 	return (
 		<div className="App">
-			{ready ? <AT find={find} successfulFind={successfulFind}/> : <Ready getReady={getReady} />}
+			<div className="main">
+				{ready ? (
+					<Suspense fallback={<LoaderContainer />}>
+						<AT find={find} successfulFind={successfulFind} />
+					</Suspense>
+				) : (
+					<Ready getReady={getReady} />
+				)}
+			</div>
 			<div className="sidebar">
 				<Character find={find} />
 				<Timer seconds={seconds} updateTime={updateTime} start={ready} />
-				{leaderboard? <Leaderboard entrants={leaderboard} /> : ""}
+				{leaderboard ? <Leaderboard entrants={leaderboard} /> : ""}
 			</div>
 		</div>
 	);

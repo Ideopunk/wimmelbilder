@@ -14,11 +14,11 @@ const Ready = (props) => {
 
 	return (
 		<form className="ready" onSubmit={(e) => handleSubmit(e)}>
-			<label>
+			<label className="ready-label">
 				Name
-				<input required onChange={(e) => handleChange(e)} />
+				<input type="text" required onChange={(e) => handleChange(e)} />
 			</label>
-			<input type="submit" value="Are you ready?" />
+			<input className="ready-submit" type="submit" value="Are you ready?" />
 		</form>
 	);
 };
