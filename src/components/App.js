@@ -35,14 +35,14 @@ const App = () => {
 		let tempLeaderboard = [];
 		db.collection("leaderboard")
 			.get()
-			.then((snapshot) =>
+			.then((snapshot) => {
 				snapshot.docs.forEach((doc) => {
 					console.log(doc.data());
 					tempLeaderboard.push(doc.data());
-				})
-			)
-			.then(setLearderboard(tempLeaderboard))
-			.then(console.log(leaderboard));
+				});
+				setLearderboard((leaderboard) => tempLeaderboard);
+				console.log(leaderboard);
+			});
 	}, []);
 
 	const getReady = (newName) => {
@@ -96,8 +96,7 @@ const App = () => {
 			</div>
 			<div className="sidebar">
 				<Character find={find} />
-				<Timer seconds={seconds} updateTime={updateTime} start={ready} />
-				{leaderboard ? <Leaderboard entrants={leaderboard} /> : ""}
+				{leaderboard ? <Leaderboard name={name} seconds={seconds} updateTime={updateTime} start={ready} entrants={leaderboard} /> : <LoaderContainer />}
 			</div>
 		</div>
 	);

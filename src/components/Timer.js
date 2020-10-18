@@ -16,7 +16,10 @@ const Timer = (props) => {
     }, [start, seconds, updateTime]);
     
     return (
-        <div className="time">{props.seconds}</div>
+		<ul className="entrant" key="new">
+			<li>{props.name}</li>
+			<li>{props.seconds}</li>
+		</ul>
     )
 };
 

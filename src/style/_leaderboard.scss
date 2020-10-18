@@ -1,0 +1,16 @@
+.leaderboard {
+    width: 80%;
+    font-size: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.entrant {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+    border-top: 1px solid black;
+}

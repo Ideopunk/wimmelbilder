@@ -1,5 +1,6 @@
 .found {
     opacity: 0.5;
+    background-color: grey;
 }
 
 .character {
@@ -11,6 +12,7 @@
     margin: 0.25rem;
     object-fit: contain;
     box-sizing: border-box;
-    border: 2px solid black;
+    border: 1px solid black;
     border-radius: 3px;
 }
+
