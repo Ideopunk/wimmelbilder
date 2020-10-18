@@ -4,7 +4,7 @@ const Leaderboard = (props) => {
 	// get stuff from firestore
 	const entrants = props.entrants.map((entrant) => {
 		return (
-			<ul>
+			<ul key={entrant.name}>
 				<li>{entrant.name}</li>
 				<li>{entrant.time}</li>
 			</ul>

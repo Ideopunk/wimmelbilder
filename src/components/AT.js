@@ -6,10 +6,11 @@ const AT = (props) => {
 		// get coordinates
 		const realX = e.clientX - e.target.getBoundingClientRect().x;
 		const realY = e.clientY - e.target.getBoundingClientRect().y;
-		const percentX = realX / e.target.getBoundingClientRect().width;
-		const percentY = realY / e.target.getBoundingClientRect().height;
+		const percentX = Math.round(realX / e.target.getBoundingClientRect().width * 100);
+		const percentY = Math.round(realY / e.target.getBoundingClientRect().height * 100);
 		console.log(percentX, percentY);
-		// pass them to app to check against cloud function
+
+		// pass them to cloud function to check
 	};
 
 	return (

@@ -7,13 +7,13 @@ const Ready = (props) => {
 		setName(e.target.value);
 	};
 
-	const handleSubmit = () => {
-		props.getName(name)
-		props.getReady()
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		props.getReady(name)
 	};
 
 	return (
-		<form className="ready" onSubmit={handleSubmit}>
+		<form className="ready" onSubmit={(e) => handleSubmit(e)}>
 			<label>
 				Name
 				<input required onChange={(e) => handleChange(e)} />

@@ -16,6 +16,7 @@ const App = () => {
 
 	// once it's mounted, go snag the leaderboard.
 	useEffect(() => {
+		console.log("use effect");
 		let tempLeaderboard = [];
 		db.collection("leaderboard")
 			.get()
@@ -29,12 +30,10 @@ const App = () => {
 			.then(console.log(leaderboard));
 	}, []);
 
-	const getReady = () => {
-		setReady(true);
-	};
-
-	const getName = (newName) => {
+	const getReady = (newName) => {
+		console.log("get ready");
 		setName(newName);
+		setReady(true);
 	};
 
 	const updateTime = (newTime) => {
@@ -47,6 +46,8 @@ const App = () => {
 
 	// when a level is completed, check to see if we're done.
 	useEffect(() => {
+		console.log("use effect");
+
 		if (level > 3) {
 			setReady(false);
 			setLevel(0);
@@ -54,26 +55,21 @@ const App = () => {
 		}
 	}, [level]);
 
-	// yay, we're done, get leaderboarded
+	// yay, we're done, add to  leaderboarded
 	const win = () => {
 		db.collection("leaderboard").add({ name: name, time: seconds });
 	};
 
-	if (ready) {
-		console.log(leaderboard);
-		return (
-			<div className="App">
-				<AT level={level} />
-				<div className="sideboard">
-					<Character level={level} />
-					<Timer seconds={seconds} updateTime={updateTime} start={ready} />
-					<Leaderboard entrants={leaderboard} />
-				</div>
+	return (
+		<div className="App">
+			{ready ? <AT level={level} /> : <Ready getReady={getReady} />}
+			<div className="sideboard">
+				<Character level={level} />
+				<Timer seconds={seconds} updateTime={updateTime} start={ready} />
+				{leaderboard? <Leaderboard entrants={leaderboard} /> : ""}
 			</div>
-		);
-	} else {
-		return <div className="App">{<Ready getName={getName} getReady={getReady} />}</div>;
-	}
+		</div>
+	);
 };
 
 export default App;
