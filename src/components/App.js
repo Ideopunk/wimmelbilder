@@ -1,6 +1,5 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
-import Timer from "./Timer";
 import Leaderboard from "./Leaderboard";
 import Character from "./Character";
 import "../style/App.scss";
@@ -43,6 +42,7 @@ const App = () => {
 				setLearderboard((leaderboard) => tempLeaderboard);
 				console.log(leaderboard);
 			});
+	// eslint-disable-next-line
 	}, []);
 
 	const getReady = (newName) => {
@@ -66,6 +66,7 @@ const App = () => {
 		);
 	};
 
+
 	// when a level is completed, check to see if we're done.
 	useEffect(() => {
 		console.log("win check");
@@ -74,14 +75,12 @@ const App = () => {
 			console.log("u win!");
 			setReady(false);
 			setFind([false, false, false]);
-			win();
-		}
-	}, [find]);
+			db.collection("leaderboard").add({ name: name, time: seconds });
 
-	// yay, we're done, add to  leaderboarded
-	const win = () => {
 		db.collection("leaderboard").add({ name: name, time: seconds });
-	};
+		}	
+	// eslint-disable-next-line
+	}, [find]);
 
 	return (
 		<div className="App">
@@ -96,7 +95,17 @@ const App = () => {
 			</div>
 			<div className="sidebar">
 				<Character find={find} />
-				{leaderboard ? <Leaderboard name={name} seconds={seconds} updateTime={updateTime} start={ready} entrants={leaderboard} /> : <LoaderContainer />}
+				{leaderboard ? (
+					<Leaderboard
+						name={name}
+						seconds={seconds}
+						updateTime={updateTime}
+						start={ready}
+						entrants={leaderboard}
+					/>
+				) : (
+					<LoaderContainer />
+				)}
 			</div>
 		</div>
 	);

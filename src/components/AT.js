@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import WIMMELBILDER from "../assets/adventuretime.png";
 import {checkChar} from "../config/fbConfig";
 
