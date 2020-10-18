@@ -8,12 +8,12 @@ const Ready = (props) => {
 	};
 
 	const handleSubmit = () => {
-		console.log(name);
-		// cloud firestore
+		props.getName(name)
+		props.getReady()
 	};
 
 	return (
-		<form className="ready" onSubmit={props.getReady}>
+		<form className="ready" onSubmit={handleSubmit}>
 			<label>
 				Name
 				<input required onChange={(e) => handleChange(e)} />
