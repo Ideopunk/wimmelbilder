@@ -6,13 +6,21 @@
 	display: flex;
 	width: 100vw;
     padding: 2rem;
-    box-sizing: border-box;
+	box-sizing: border-box;
+	background: linear-gradient(rgb(255, 255, 136), rgb(255, 159, 159));
+	height: 100vh;
 }
 
 .sidebar {
-	flex: 1;
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	margin: 1rem;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid red;
 }
 
-p {
-	color: red;
+.ready {
+	width: 80vw;
 }

@@ -1,6 +1,6 @@
 import React from "react";
-import ASH from "../assets/Ash_trans.png";
-import CC from "../assets/Candy_Cane.png";
+import ASH from "../assets/Ash_Headshot.png";
+import CC from "../assets/Candy_Cane_Headshot.png";
 import SNAIL from "../assets/Waving_Snail.png";
 
 const Character = (props) => {

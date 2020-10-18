@@ -1,8 +1,11 @@
 
+.image-container {
+    align-self: center;
+}
 
 .image {
     flex: 8;
-    max-width: 80vw;
+    width: 80vw;
     // height: 100vh;
     object-fit: contain;
 }

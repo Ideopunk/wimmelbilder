@@ -5,5 +5,12 @@
 .character {
     width: 100px;
     height: 100px;
+    padding-top: 0.5rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    margin: 0.25rem;
     object-fit: contain;
+    box-sizing: border-box;
+    border: 2px solid black;
+    border-radius: 3px;
 }

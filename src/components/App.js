@@ -69,7 +69,7 @@ const App = () => {
 	return (
 		<div className="App">
 			{ready ? <AT find={find} successfulFind={successfulFind}/> : <Ready getReady={getReady} />}
-			<div className="sideboard">
+			<div className="sidebar">
 				<Character find={find} />
 				<Timer seconds={seconds} updateTime={updateTime} start={ready} />
 				{leaderboard? <Leaderboard entrants={leaderboard} /> : ""}
