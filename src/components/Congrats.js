@@ -43,7 +43,7 @@ const Congrats = (props) => {
 
 	return (
 		<div className="cover" onClick={handleClick}>
-			<div className="congrats">
+			<div className="congrats fade">
 				<p>Congratulations!</p>
 				{suffix?                 <p>
 					{" "}

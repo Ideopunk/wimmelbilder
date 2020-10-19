@@ -6,8 +6,8 @@ import "../style/App.scss";
 import Ready from "./Ready";
 import { db } from "../config/fbConfig";
 import Cred from "./Cred";
+import AT from "./AT";
 const Timer = lazy(() => import("./Timer"));
-const AT = lazy(() => import("./AT"));
 const Congrats = lazy(() => import("./Congrats"));
 
 const App = () => {
@@ -41,6 +41,10 @@ const App = () => {
 		console.log("rerender App");
 	});
 
+	useEffect(() => {
+		console.log('leaderboard changed')
+	}, [leaderboard])
+
 	const getReady = (newName) => {
 		console.log("get ready");
 		setName(newName);
@@ -62,20 +66,20 @@ const App = () => {
 		console.log("u win!");
 		setReady(false);
 		setFind([false, false, false]);
-		setID(winnerID)
+		setID(winnerID);
 	};
 
-	// wait until id is set to trigger winner id. 
+	// wait until id is set to trigger winner id.
 	useEffect(() => {
 		if (id) {
-			setWin(true)
+			setWin(true);
 		}
-	}, [id])
+	}, [id]);
 
 	const newGame = () => {
 		setWin(false);
-		setID(false)
-	}
+		setID(false);
+	};
 
 	return (
 		<div className="App">
@@ -88,20 +92,17 @@ const App = () => {
 			)}
 			<div className="main">
 				{ready ? (
-					<Suspense fallback={<LoaderContainer />}>
-						<AT find={find} successfulFind={successfulFind} />
-					</Suspense>
+					<AT find={find} successfulFind={successfulFind} />
 				) : (
 					<Ready getReady={getReady} />
 				)}
 			</div>
-			<div className="sidebar">
+			<div className="sidebar fade">
 				<Character find={find} />
 				{leaderboard ? (
 					<div className="leaderboard">
 						<h3>Leaderboard</h3>
 
-						<Leaderboard entrants={leaderboard} />
 						<Suspense fallback={<LoaderContainer />}>
 							<Timer
 								name={name}
@@ -111,6 +112,8 @@ const App = () => {
 								winner={winner}
 							/>
 						</Suspense>
+						<Leaderboard entrants={leaderboard} />
+
 					</div>
 				) : (
 					<LoaderContainer />

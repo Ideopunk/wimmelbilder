@@ -14,7 +14,7 @@ const Ready = (props) => {
 	};
 
 	return (
-		<form className="ready" onSubmit={(e) => handleSubmit(e)}>
+		<form className="ready fade" onSubmit={(e) => handleSubmit(e)}>
 			<label className="ready-label">
 				Name
 				<input type="text" maxLength={16} required onChange={(e) => handleChange(e)} />

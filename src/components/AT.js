@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import WIMMELBILDER from "../assets/adventuretime.png";
 import {checkChar} from "../config/fbConfig";
 
 const AT = (props) => {
+	const [hide, setHide] = useState(true)
+
 	const handleClick = (e) => {
 		console.log('clicked, now waiting')
 		// get coordinates
@@ -25,13 +27,18 @@ const AT = (props) => {
 		})
 	};
 
+	const loadComplete = () => {
+		setHide(false)
+	}
+
 	return (
 		<div className="image-container">
 			<img
-				className="image"
+				className={`image ${hide? "hide" : ""}`}
 				src={WIMMELBILDER}
 				alt="adventure time wimmelbilder"
 				onClick={(e) => handleClick(e)}
+				onLoad={loadComplete}
 			/>
 		</div>
 	);
