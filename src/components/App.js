@@ -5,6 +5,7 @@ import Character from "./Character";
 import "../style/App.scss";
 import Ready from "./Ready";
 import { db } from "../config/fbConfig";
+import Timer from "./Timer";
 const AT = lazy(() => import("./AT"));
 
 const App = () => {
@@ -42,8 +43,9 @@ const App = () => {
 		setReady(true);
 	};
 
-	const updateTime = (newTime) => {
-		setSeconds((seconds) => newTime);
+	const updateTime = () => {
+		console.log("update time");
+		setSeconds((seconds) => seconds + 1);
 	};
 
 	const successfulFind = (number) => {
@@ -87,13 +89,17 @@ const App = () => {
 			<div className="sidebar">
 				<Character find={find} />
 				{leaderboard ? (
-					<Leaderboard
-						name={name}
-						seconds={seconds}
-						updateTime={updateTime}
-						start={ready}
-						entrants={leaderboard}
-					/>
+					<div className="leaderboard">
+						<h3>Leaderboard</h3>
+
+						<Leaderboard entrants={leaderboard} />
+						<Timer
+							name={name}
+							seconds={seconds}
+							updateTime={updateTime}
+							ready={ready}
+						/>
+					</div>
 				) : (
 					<LoaderContainer />
 				)}

@@ -1,5 +1,4 @@
 import React from "react";
-import Timer from "./Timer";
 
 const Leaderboard = (props) => {
 	// get stuff from firestore
@@ -14,12 +13,10 @@ const Leaderboard = (props) => {
 	});
 
 	return (
-		<div className="leaderboard">
-			<h3>Leaderboard</h3>
+		<>
 			{entrants}
-			<Timer name={props.name} seconds={props.seconds} updateTime={props.updateTime} start={props.ready} />
 
-		</div>
+		</>
 	);
 };
 

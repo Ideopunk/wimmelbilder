@@ -1,19 +1,21 @@
 import React, { useEffect } from "react";
 
 const Timer = (props) => {
-	const {start, seconds, updateTime} = props
+	const {ready, seconds, updateTime} = props
 
 	useEffect(() => {
+		console.log('timer use effect')
+		console.log(ready)
 		let interval = null;
-		if (start) {
+		if (ready) {
 			interval = setInterval(() => {
-				updateTime(seconds+1);
+				updateTime();
 			}, 1000);
-		} else if (!start && seconds !== 0) {
+		} else if (!ready && seconds !== 0) {
             clearInterval(interval)
         }
         return () => clearInterval(interval);
-    }, [start, seconds, updateTime]);
+    }, [ready, seconds, updateTime]);
     
     return (
 		<ul className="entrant" key="new">
