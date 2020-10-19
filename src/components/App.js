@@ -1,25 +1,11 @@
-import React, { lazy, Suspense, useEffect, useState } from "react";
-import Loader from "react-loader-spinner";
+import React, { lazy, Suspense, useCallback, useEffect, useState } from "react";
+import LoaderContainer from "./LoaderContainer";
 import Leaderboard from "./Leaderboard";
 import Character from "./Character";
 import "../style/App.scss";
 import Ready from "./Ready";
 import { db } from "../config/fbConfig";
 const AT = lazy(() => import("./AT"));
-
-const LoaderContainer = () => {
-	return (
-		<div className="center">
-			<Loader
-				type="TailSpin"
-				color="pink"
-				height={100}
-				width={100}
-				timeout={3000} //3 secs
-			/>
-		</div>
-	);
-};
 
 const App = () => {
 	const [ready, setReady] = useState(false);
@@ -39,10 +25,8 @@ const App = () => {
 					console.log(doc.data());
 					tempLeaderboard.push(doc.data());
 				});
-				setLearderboard((leaderboard) => tempLeaderboard);
-				console.log(leaderboard);
+				setLearderboard((oldLeaderboard) => tempLeaderboard).then(console.log("converted"));
 			});
-	// eslint-disable-next-line
 	}, []);
 
 	const getReady = (newName) => {
@@ -66,6 +50,9 @@ const App = () => {
 		);
 	};
 
+	const dbAdd = useCallback(() => {
+		return db.collection("leaderboard").add({ name: name, time: seconds });
+	}, [name, seconds]);
 
 	// when a level is completed, check to see if we're done.
 	useEffect(() => {
@@ -75,12 +62,9 @@ const App = () => {
 			console.log("u win!");
 			setReady(false);
 			setFind([false, false, false]);
-			db.collection("leaderboard").add({ name: name, time: seconds });
-
-		db.collection("leaderboard").add({ name: name, time: seconds });
-		}	
-	// eslint-disable-next-line
-	}, [find]);
+			dbAdd();
+		}
+	}, [find, dbAdd]);
 
 	return (
 		<div className="App">
