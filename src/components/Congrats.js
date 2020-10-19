@@ -11,9 +11,38 @@ const Congrats = (props) => {
 		newGame();
 	};
 
+	const switchSuffix = (switchRank) => {
+
+		// if the number is 11-13, the suffix should be "th", not the typical one.
+		const checkNum = Number(switchRank.toString().charAt(0));
+		if (checkNum === 1) {
+			setSuffix("th");
+		} else {
+			switch (switchRank % 10) {
+				case 1:
+					setSuffix("st");
+					break;
+				case 2:
+					setSuffix("nd");
+					break;
+				case 3:
+					setSuffix("rd");
+					break;
+				case 4:
+				case 5:
+				case 6:
+				case 7:
+				case 8:
+				case 9:
+				case 10:
+				default:
+					setSuffix("th");
+					break;
+			}
+		}
+	};
+
 	useEffect(() => {
-		console.log("use effect: snag leaderboard");
-		console.log(id);
 		db.collection("leaderboard")
 			.orderBy("time")
 			.get()
@@ -21,9 +50,7 @@ const Congrats = (props) => {
 				let switchRank = null;
 
 				snapshot.docs.forEach((doc, index) => {
-					console.log(doc.data())
 					if (doc.id === id) {
-						console.log(index);
 						switchRank = index + 1;
 						setRank(index + 1);
 					}
@@ -31,28 +58,7 @@ const Congrats = (props) => {
 				return switchRank;
 			})
 			.then((switchRank) => {
-				console.log("switch use effect", switchRank);
-				switch (switchRank % 10) {
-					case 1:
-						setSuffix("st");
-						break;
-					case 2:
-						setSuffix("nd");
-						break;
-					case 3:
-						setSuffix("rd");
-						break;
-					case 4:
-					case 5:
-					case 6:
-					case 7:
-					case 8:
-					case 9:
-					case 10:
-					default:
-						setSuffix("th");
-						break;
-				}
+				switchSuffix(switchRank);
 			});
 	}, [id]);
 

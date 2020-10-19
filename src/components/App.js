@@ -19,7 +19,6 @@ const App = () => {
 
 	// once it's mounted, go snag the leaderboard.
 	useEffect(() => {
-		console.log("use effect: snag leaderboard");
 		let tempLeaderboard = [];
 		db.collection("leaderboard")
 			.orderBy("time")
@@ -34,22 +33,12 @@ const App = () => {
 			});
 	}, []);
 
-	useEffect(() => {
-		console.log("state update");
-	});
-
-	useEffect(() => {
-		console.log("leaderboard changed");
-	}, [leaderboard]);
-
 	const getReady = (newName) => {
-		console.log("get ready");
 		setName(newName);
 		setReady(true);
 	};
 
 	const successfulFind = (number) => {
-		console.log("successfulfind");
 		setFind(
 			find.map((char, index) => {
 				if (index === number) {
@@ -60,13 +49,15 @@ const App = () => {
 		);
 	};
 
+	// score has been added to leaderboard, now end game
 	const winner = (winnerID) => {
-		console.log("u win!");
 		setReady(false);
 		setID(winnerID);
 		setFind([false, false, false]);
-		setLearderboard("")
+		setLearderboard("");
 		let tempLeaderboard = [];
+
+		// display the updated leaderboard.
 		db.collection("leaderboard")
 			.orderBy("time")
 			.get()
@@ -80,6 +71,7 @@ const App = () => {
 			});
 	};
 
+	// click outside victory screen, start a new game. 
 	const newGame = () => {
 		setID("");
 	};

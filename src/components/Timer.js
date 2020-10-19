@@ -7,9 +7,6 @@ const Timer = (props) => {
 	const { find, name, ready, id, winner } = props;
 
 	useEffect(() => {
-		console.log("timer use effect");
-		console.log(ready);
-		console.log(find, "find");
 		let interval = null;
 		if (ready && find.includes(false)) {
 			interval = setInterval(() => {
