@@ -15,7 +15,6 @@ const App = () => {
 	const [name, setName] = useState("");
 	const [leaderboard, setLearderboard] = useState(null);
 	const [id, setID] = useState("");
-	const [gameEnd, setGameEnd] = useState(false);
 	const [find, setFind] = useState([false, false, false]);
 
 	// once it's mounted, go snag the leaderboard.
@@ -61,20 +60,11 @@ const App = () => {
 		);
 	};
 
-	useEffect(() => {
-		console.log("wincheck");
-		if (!find.includes(false)) {
-			console.log("u win!");
-			setGameEnd(true);
-		}
-	}, [find]);
-
 	const winner = (winnerID) => {
 		console.log("u win!");
 		setID(winnerID);
 		setReady(false);
 		setFind([false, false, false]);
-		setGameEnd(false);
 	};
 
 	const newGame = () => {
@@ -104,13 +94,7 @@ const App = () => {
 
 					{ready && (
 						<Suspense fallback={<LoaderContainer />}>
-							<Timer
-								name={name}
-								gameEnd={gameEnd}
-								ready={ready}
-								id={id}
-								winner={winner}
-							/>
+							<Timer name={name} ready={ready} id={id} find={find} winner={winner} />
 						</Suspense>
 					)}
 

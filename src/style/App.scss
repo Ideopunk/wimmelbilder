@@ -16,9 +16,27 @@
 	height: 100vh;
 }
 
+@media (max-width: 767px) {
+	.App::before {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100vw;
+		height: 100vh;
+		background-color: white;
+		z-index: 3;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		content: "A phone is too small for this game lol";
+	}
+}
+
+
 h3 {
 	text-align: center;
 }
+
 
 .main {
 	height: 100%;
@@ -27,6 +45,17 @@ h3 {
 	align-items: center;
 	justify-content: center;
 	box-sizing: border-box;
+}
+
+@media (max-width: 1023px) {
+	.App {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.main {
+		width: 100%;
+	}
 }
 
 
@@ -43,7 +72,14 @@ h3 {
 .cred {
 	position: absolute;
 	bottom: 1rem;
+	left: 1rem;
 	font-size: 0.75rem;
+}
+
+@media (max-width: 1023px) {
+	.cred {
+		width: 9rem;
+	}
 }
 
 .hide {

@@ -4,7 +4,7 @@ import { db } from "../config/fbConfig";
 const Timer = (props) => {
 	const [seconds, setSeconds] = useState(0);
 
-	const { gameEnd, name, ready, id, winner } = props;
+	const { find, name, ready, id, winner } = props;
 	// const win = props.win;
 
 	useEffect(() => {
@@ -23,13 +23,13 @@ const Timer = (props) => {
 
 	useEffect(() => {
 		console.log("wincheck");
-		if (gameEnd) {
+		if (!find.includes(false)) {
 			console.log("u win!");
 			db.collection("leaderboard")
 				.add({ name: name, time: seconds })
 				.then((docRef) => winner(docRef.id));
 		}
-	}, [gameEnd, name, seconds, winner]);
+	}, [find, name, seconds, winner]);
 
 	return (
 		<ul className="entrant" key="new">

@@ -11,7 +11,17 @@ $scroll: rgb(238, 195, 116);
 	border-radius: 3px;
 }
 
+@media (max-width: 1023px) {
+	.sidebar {
+		flex-direction: row;
+		width: 60vw;
+		height: 20vh;
+	}
 
+	.leaderboard {
+		max-height: 50px;
+	}
+}
 
 .leaderboard {
 	width: 100%;
