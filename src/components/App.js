@@ -1,11 +1,11 @@
-import React, { lazy, Suspense, useCallback, useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import LoaderContainer from "./LoaderContainer";
 import Leaderboard from "./Leaderboard";
 import Character from "./Character";
 import "../style/App.scss";
 import Ready from "./Ready";
 import { db } from "../config/fbConfig";
-import Timer from "./Timer";
+const Timer = lazy(() => import("./Timer"));
 const AT = lazy(() => import("./AT"));
 
 const App = () => {
@@ -13,11 +13,10 @@ const App = () => {
 	const [find, setFind] = useState([false, false, false]);
 	const [name, setName] = useState("");
 	const [leaderboard, setLearderboard] = useState(null);
-	const [seconds, setSeconds] = useState(0);
 
 	// once it's mounted, go snag the leaderboard.
 	useEffect(() => {
-		console.log("use effect");
+		console.log("use effect: snag leaderboard");
 		let tempLeaderboard = [];
 		db.collection("leaderboard")
 			.get()
@@ -43,10 +42,7 @@ const App = () => {
 		setReady(true);
 	};
 
-	const updateTime = () => {
-		console.log("update time");
-		setSeconds((seconds) => seconds + 1);
-	};
+
 
 	const successfulFind = (number) => {
 		setFind(
@@ -59,21 +55,11 @@ const App = () => {
 		);
 	};
 
-	const dbAdd = useCallback(() => {
-		return db.collection("leaderboard").add({ name: name, time: seconds });
-	}, [name, seconds]);
-
-	// when a level is completed, check to see if we're done.
-	useEffect(() => {
-		console.log("win check");
-
-		if (!find.includes(false)) {
-			console.log("u win!");
-			setReady(false);
-			setFind([false, false, false]);
-			dbAdd();
-		}
-	}, [find, dbAdd]);
+	const win = () => {
+		console.log("u win!");
+		setReady(false);
+		setFind([false, false, false]);
+	};
 
 	return (
 		<div className="App">
@@ -93,12 +79,14 @@ const App = () => {
 						<h3>Leaderboard</h3>
 
 						<Leaderboard entrants={leaderboard} />
-						<Timer
-							name={name}
-							seconds={seconds}
-							updateTime={updateTime}
-							ready={ready}
-						/>
+						<Suspense fallback={<LoaderContainer />}>
+							<Timer
+								name={name}
+								find={find}
+								ready={ready}
+								win={win}
+							/>
+						</Suspense>
 					</div>
 				) : (
 					<LoaderContainer />
