@@ -5,6 +5,7 @@ import Character from "./Character";
 import "../style/App.scss";
 import Ready from "./Ready";
 import { db } from "../config/fbConfig";
+import Cred from "./Cred";
 const Timer = lazy(() => import("./Timer"));
 const AT = lazy(() => import("./AT"));
 
@@ -13,12 +14,14 @@ const App = () => {
 	const [find, setFind] = useState([false, false, false]);
 	const [name, setName] = useState("");
 	const [leaderboard, setLearderboard] = useState(null);
+	const [win, setWin] = useState(false);
 
 	// once it's mounted, go snag the leaderboard.
 	useEffect(() => {
 		console.log("use effect: snag leaderboard");
 		let tempLeaderboard = [];
 		db.collection("leaderboard")
+			.orderBy("time")
 			.get()
 			.then((snapshot) => {
 				snapshot.docs.forEach((doc) => {
@@ -28,12 +31,12 @@ const App = () => {
 					const smush = { name: name, time: time, id: doc.id };
 					tempLeaderboard.push(smush);
 				});
-				setLearderboard((oldLeaderboard) => tempLeaderboard);
+				setLearderboard(tempLeaderboard);
 			});
 	}, []);
 
 	useEffect(() => {
-		console.log("rerender");
+		console.log("rerender App");
 	});
 
 	const getReady = (newName) => {
@@ -41,8 +44,6 @@ const App = () => {
 		setName(newName);
 		setReady(true);
 	};
-
-
 
 	const successfulFind = (number) => {
 		setFind(
@@ -55,10 +56,11 @@ const App = () => {
 		);
 	};
 
-	const win = () => {
+	const winner = () => {
 		console.log("u win!");
 		setReady(false);
 		setFind([false, false, false]);
+		setWin(true);
 	};
 
 	return (
@@ -85,6 +87,7 @@ const App = () => {
 								find={find}
 								ready={ready}
 								win={win}
+								winner={winner}
 							/>
 						</Suspense>
 					</div>
@@ -92,28 +95,7 @@ const App = () => {
 					<LoaderContainer />
 				)}
 			</div>
-			<div className="cred">
-				<p>
-					Headshots from{" "}
-					<a
-						target="_blank"
-						rel="noopener noreferrer"
-						href="https://adventuretime.fandom.com/wiki/Adventure_Time_with_Finn_and_Jake_Wiki"
-					>
-						adventuretime.fandom.com
-					</a>
-				</p>
-				<p>
-					Adventure Time Wimmelbilder from{" "}
-					<a
-						target="_blank"
-						rel="noopener noreferrer"
-						href="https://www.reddit.com/r/adventuretime/comments/bvr37b/the_land_of_ooo_adventure_time_by_tom_preston/"
-					>
-						Tom Preston
-					</a>
-				</p>
-			</div>
+			<Cred />
 		</div>
 	);
 };
