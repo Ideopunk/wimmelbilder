@@ -8,7 +8,7 @@ const Character = (props) => {
 
 
 	return (
-		<div>
+		<div className="characters">
 			<img className={`character ${find[0]? "found" : ""}`} src={ASH} alt="current character" />
 			<img className={`character ${find[1]? "found" : ""}`} src={CC} alt="current character" />
 			<img className={`character ${find[2]? "found" : ""}`} src={SNAIL} alt="current character" />

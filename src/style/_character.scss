@@ -1,18 +1,23 @@
+.characters {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .found {
-    opacity: 0.5;
-    background-color: grey;
+	opacity: 0.5;
+	background-color: grey;
 }
 
 .character {
-    width: 65px;
-    height: 65px;
-    padding-top: 0.5rem;
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
-    margin: 0.25rem;
-    object-fit: contain;
-    box-sizing: border-box;
-    border: 1px solid black;
-    border-radius: 3px;
+	width: 70px;
+	height: 70px;
+	padding-top: 0.5rem;
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
+	margin: 0.25rem;
+	object-fit: contain;
+	box-sizing: border-box;
+	border: 1px solid black;
+	border-radius: 3px;
 }
-

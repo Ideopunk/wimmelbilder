@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import Character from "./Character";
 
 const Ready = (props) => {
 	const [name, setName] = useState("");
@@ -16,9 +17,11 @@ const Ready = (props) => {
 		<form className="ready" onSubmit={(e) => handleSubmit(e)}>
 			<label className="ready-label">
 				Name
-				<input type="text" required onChange={(e) => handleChange(e)} />
+				<input type="text" maxLength={16} required onChange={(e) => handleChange(e)} />
 			</label>
 			<input className="ready-submit" type="submit" value="Are you ready?" />
+			<h3>Find these characters!</h3>
+			<Character find={["", "", "", ""]}/>
 		</form>
 	);
 };
