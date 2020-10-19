@@ -17,7 +17,7 @@ const Timer = (props) => {
     
     return (
 		<ul className="entrant" key="new">
-			<li>{props.name}</li>
+			<li className="player-name">{props.name}</li>
 			<li>{props.seconds}</li>
 		</ul>
     )

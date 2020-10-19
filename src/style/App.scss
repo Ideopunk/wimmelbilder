@@ -2,7 +2,7 @@
 @import "./ready";
 @import "./AT";
 @import "./character";
-@import "./leaderboard";
+@import "./sidebar";
 
 .App {
 	font-family: "Darker Grotesque", sans-serif;
@@ -28,16 +28,6 @@ h3 {
 	box-sizing: border-box;
 }
 
-.sidebar {
-	background-color: white;
-	display: flex;
-	flex-direction: column;
-	width: 20vw;
-	margin-left: 1rem;
-	align-items: center;
-	border: 2px solid black;
-	border-radius: 3px;
-}
 
 .center {
 	text-align: center;

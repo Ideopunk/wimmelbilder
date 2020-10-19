@@ -1,5 +1,17 @@
 $scroll: rgb(238, 195, 116);
 
+.sidebar {
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	width: 20vw;
+	margin-left: 1rem;
+	align-items: center;
+	border: 2px solid black;
+	border-radius: 3px;
+}
+
+
 .leaderboard {
 	width: 100%;
 	padding: 0 1rem;
@@ -8,15 +20,14 @@ $scroll: rgb(238, 195, 116);
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-evenly;
+	justify-content: space-between;
 	max-height: 100%;
 	overflow-y: scroll;
 
 	// firefox
 	scrollbar-width: thin;
 	scrollbar-color: $scroll transparent;
-	-webkit-mask-image: -webkit-radial-gradient(white, black);
-	mask-image: radial-gradient(white, black);
+
 }
 
 /* Works on Chrome/Edge/Safari */
@@ -37,4 +48,9 @@ $scroll: rgb(238, 195, 116);
 	align-items: center;
 	margin: 1rem 0;
 	border-top: 1px solid black;
+}
+
+.player-name {
+	font-weight: bold;
+	letter-spacing: 1px;
 }
