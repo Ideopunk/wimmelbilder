@@ -8,6 +8,7 @@ import { db } from "../config/fbConfig";
 import Cred from "./Cred";
 const Timer = lazy(() => import("./Timer"));
 const AT = lazy(() => import("./AT"));
+const Congrats = lazy(() => import("./Congrats"));
 
 const App = () => {
 	const [ready, setReady] = useState(false);
@@ -15,6 +16,7 @@ const App = () => {
 	const [name, setName] = useState("");
 	const [leaderboard, setLearderboard] = useState(null);
 	const [win, setWin] = useState(false);
+	const [id, setID] = useState("");
 
 	// once it's mounted, go snag the leaderboard.
 	useEffect(() => {
@@ -56,15 +58,34 @@ const App = () => {
 		);
 	};
 
-	const winner = () => {
+	const winner = (winnerID) => {
 		console.log("u win!");
 		setReady(false);
 		setFind([false, false, false]);
-		setWin(true);
+		setID(winnerID)
 	};
+
+	// wait until id is set to trigger winner id. 
+	useEffect(() => {
+		if (id) {
+			setWin(true)
+		}
+	}, [id])
+
+	const newGame = () => {
+		setWin(false);
+		setID(false)
+	}
 
 	return (
 		<div className="App">
+			{win ? (
+				<Suspense fallback={<LoaderContainer />}>
+					<Congrats id={id} newGame={newGame} />
+				</Suspense>
+			) : (
+				""
+			)}
 			<div className="main">
 				{ready ? (
 					<Suspense fallback={<LoaderContainer />}>
