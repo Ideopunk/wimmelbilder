@@ -62,8 +62,9 @@ const App = () => {
 
 	const winner = (winnerID) => {
 		console.log("u win!");
-		setID(winnerID);
 		setReady(false);
+
+		setID(winnerID);
 		setFind([false, false, false]);
 	};
 

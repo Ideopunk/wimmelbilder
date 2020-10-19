@@ -13,46 +13,49 @@ const Congrats = (props) => {
 
 	useEffect(() => {
 		console.log("use effect: snag leaderboard");
-		console.log(id)
+		console.log(id);
 		db.collection("leaderboard")
 			.orderBy("time")
 			.get()
 			.then((snapshot) => {
+				let switchRank = null;
+
 				snapshot.docs.forEach((doc, index) => {
 					if (doc.id === id) {
-						console.log(index)
-						setRank(index);
+						console.log(index);
+						switchRank = index + 1;
+						setRank(index + 1);
 					}
 				});
+				return switchRank + 1;
+			})
+			.then((switchRank) => {
+				console.log("switch use effect", switchRank, rank);
+				switch (switchRank % 10) {
+					case "1":
+						setSuffix("st");
+						break;
+					case "2":
+						setSuffix("nd");
+						break;
+					case "3":
+						setSuffix("rd");
+						break;
+					case "4":
+					case "5":
+					case "6":
+					case "7":
+					case "8":
+					case "9":
+					case "10":
+					default:
+						setSuffix("th");
+						break;
+				}
 			});
 	}, [id]);
 
-	useEffect(() => {
-		console.log('switch use effect', rank)
-		switch (rank % 10) {
-			case "1":
-				setSuffix("st");
-				break;
-			case "2":
-				setSuffix("nd");
-				break;
-			case "3":
-				setSuffix("rd");
-				break;
-			case "4":
-			case "5":
-			case "6":
-			case "7":
-			case "8":
-			case "9":
-			case "10":
-			default:
-				setSuffix("th");
-				break;
-			// default:
-				// setSuffix("");
-		}
-	}, [rank]);
+	useEffect(() => {}, [rank]);
 
 	return (
 		<div className="cover" onClick={handleClick}>

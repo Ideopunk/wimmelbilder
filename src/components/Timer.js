@@ -24,7 +24,6 @@ const Timer = (props) => {
 	useEffect(() => {
 		console.log("wincheck");
 		if (!find.includes(false)) {
-			console.log("u win!");
 			db.collection("leaderboard")
 				.add({ name: name, time: seconds })
 				.then((docRef) => winner(docRef.id));
