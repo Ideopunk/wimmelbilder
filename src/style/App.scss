@@ -49,3 +49,14 @@ h3 {
 .hide {
 	visibility: hidden;
 }
+
+.fade {
+	opacity: 1;
+	animation: fade 1s;
+	animation-timing-function: ease;
+}
+
+@keyframes fade {
+    from {opacity: 0}
+    to {opacity: 1}
+}

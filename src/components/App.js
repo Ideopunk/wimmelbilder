@@ -12,11 +12,11 @@ const Congrats = lazy(() => import("./Congrats"));
 
 const App = () => {
 	const [ready, setReady] = useState(false);
-	const [find, setFind] = useState([false, false, false]);
 	const [name, setName] = useState("");
 	const [leaderboard, setLearderboard] = useState(null);
-	const [win, setWin] = useState(false);
 	const [id, setID] = useState("");
+	const [gameEnd, setGameEnd] = useState(false);
+	const [find, setFind] = useState([false, false, false]);
 
 	// once it's mounted, go snag the leaderboard.
 	useEffect(() => {
@@ -28,8 +28,6 @@ const App = () => {
 			.then((snapshot) => {
 				snapshot.docs.forEach((doc) => {
 					const { name, time } = doc.data();
-					console.log(name, time);
-					console.log(doc.id);
 					const smush = { name: name, time: time, id: doc.id };
 					tempLeaderboard.push(smush);
 				});
@@ -38,12 +36,12 @@ const App = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log("rerender App");
+		console.log("state update");
 	});
 
 	useEffect(() => {
-		console.log('leaderboard changed')
-	}, [leaderboard])
+		console.log("leaderboard changed");
+	}, [leaderboard]);
 
 	const getReady = (newName) => {
 		console.log("get ready");
@@ -52,6 +50,7 @@ const App = () => {
 	};
 
 	const successfulFind = (number) => {
+		console.log("successfulfind");
 		setFind(
 			find.map((char, index) => {
 				if (index === number) {
@@ -62,28 +61,29 @@ const App = () => {
 		);
 	};
 
+	useEffect(() => {
+		console.log("wincheck");
+		if (!find.includes(false)) {
+			console.log("u win!");
+			setGameEnd(true);
+		}
+	}, [find]);
+
 	const winner = (winnerID) => {
 		console.log("u win!");
+		setID(winnerID);
 		setReady(false);
 		setFind([false, false, false]);
-		setID(winnerID);
+		setGameEnd(false);
 	};
 
-	// wait until id is set to trigger winner id.
-	useEffect(() => {
-		if (id) {
-			setWin(true);
-		}
-	}, [id]);
-
 	const newGame = () => {
-		setWin(false);
-		setID(false);
+		setID("");
 	};
 
 	return (
 		<div className="App">
-			{win ? (
+			{id ? (
 				<Suspense fallback={<LoaderContainer />}>
 					<Congrats id={id} newGame={newGame} />
 				</Suspense>
@@ -99,25 +99,23 @@ const App = () => {
 			</div>
 			<div className="sidebar fade">
 				<Character find={find} />
-				{leaderboard ? (
-					<div className="leaderboard">
-						<h3>Leaderboard</h3>
+				<div className="leaderboard">
+					<h3>Leaderboard</h3>
 
+					{ready && (
 						<Suspense fallback={<LoaderContainer />}>
 							<Timer
 								name={name}
-								find={find}
+								gameEnd={gameEnd}
 								ready={ready}
-								win={win}
+								id={id}
 								winner={winner}
 							/>
 						</Suspense>
-						<Leaderboard entrants={leaderboard} />
+					)}
 
-					</div>
-				) : (
-					<LoaderContainer />
-				)}
+					{leaderboard ? <Leaderboard entrants={leaderboard} /> : <LoaderContainer />}
+				</div>
 			</div>
 			<Cred />
 		</div>
