@@ -15,7 +15,7 @@ const Congrats = (props) => {
 
 		// if the number is 11-13, the suffix should be "th", not the typical one.
 		const checkNum = Number(switchRank.toString().charAt(0));
-		if (checkNum === 1) {
+		if (checkNum === 1 && switchRank !== 1) {
 			setSuffix("th");
 		} else {
 			switch (switchRank % 10) {
