@@ -22,12 +22,19 @@ const App = () => {
 			.get()
 			.then((snapshot) => {
 				snapshot.docs.forEach((doc) => {
-					console.log(doc.data());
-					tempLeaderboard.push(doc.data());
+					const {name, time} = doc.data()
+					console.log(name, time);
+					console.log(doc.id)
+					const smush = {name: name, time: time, id: doc.id}
+					tempLeaderboard.push(smush);
 				});
-				setLearderboard((oldLeaderboard) => tempLeaderboard).then(console.log("converted"));
+				setLearderboard((oldLeaderboard) => tempLeaderboard);
 			});
 	}, []);
+
+	useEffect(() => {
+		console.log('rerender')
+	})
 
 	const getReady = (newName) => {
 		console.log("get ready");
