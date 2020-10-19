@@ -63,9 +63,21 @@ const App = () => {
 	const winner = (winnerID) => {
 		console.log("u win!");
 		setReady(false);
-
 		setID(winnerID);
 		setFind([false, false, false]);
+		setLearderboard("")
+		let tempLeaderboard = [];
+		db.collection("leaderboard")
+			.orderBy("time")
+			.get()
+			.then((snapshot) => {
+				snapshot.docs.forEach((doc) => {
+					const { name, time } = doc.data();
+					const smush = { name: name, time: time, id: doc.id };
+					tempLeaderboard.push(smush);
+				});
+				setLearderboard(tempLeaderboard);
+			});
 	};
 
 	const newGame = () => {

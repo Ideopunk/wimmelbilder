@@ -21,41 +21,40 @@ const Congrats = (props) => {
 				let switchRank = null;
 
 				snapshot.docs.forEach((doc, index) => {
+					console.log(doc.data())
 					if (doc.id === id) {
 						console.log(index);
 						switchRank = index + 1;
 						setRank(index + 1);
 					}
 				});
-				return switchRank + 1;
+				return switchRank;
 			})
 			.then((switchRank) => {
-				console.log("switch use effect", switchRank, rank);
+				console.log("switch use effect", switchRank);
 				switch (switchRank % 10) {
-					case "1":
+					case 1:
 						setSuffix("st");
 						break;
-					case "2":
+					case 2:
 						setSuffix("nd");
 						break;
-					case "3":
+					case 3:
 						setSuffix("rd");
 						break;
-					case "4":
-					case "5":
-					case "6":
-					case "7":
-					case "8":
-					case "9":
-					case "10":
+					case 4:
+					case 5:
+					case 6:
+					case 7:
+					case 8:
+					case 9:
+					case 10:
 					default:
 						setSuffix("th");
 						break;
 				}
 			});
 	}, [id]);
-
-	useEffect(() => {}, [rank]);
 
 	return (
 		<div className="cover" onClick={handleClick}>
